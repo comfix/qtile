@@ -36,6 +36,10 @@ class ThermalSensor(base.InLoopPollText):
     You can get a list of the tag_sensors executing "sensors" in your terminal.
     Then you can choose which you want, otherwise it will display the first
     available.
+
+    Widget requirements: psutil_.
+
+    .. _psutil: https://pypi.org/project/psutil/
     """
     orientations = base.ORIENTATION_HORIZONTAL
     defaults = [
@@ -69,8 +73,9 @@ class ThermalSensor(base.InLoopPollText):
                 break
 
     def get_temp_sensors(self):
-        """calls the unix `sensors` command with `-f` flag if user has specified that
-        the output should be read in Fahrenheit.
+        """
+        Reads temperatures from sys-fs via psutil.
+        Output will be read Fahrenheit if user has specified it to be.
         """
 
         temperature_list = {}
