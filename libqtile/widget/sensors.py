@@ -86,7 +86,7 @@ class ThermalSensor(base.InLoopPollText):
             for sensor in temps[kernel_module]:
                 label = sensor.label
                 if not label:
-                    label = 'UNKNOWN-' + str(empty_index)
+                    label = "{}-{}".format(kernel_module if kernel_module else 'UNKNOWN', str(empty_index))
                     empty_index += 1
                 temperature_list[label] = (str(round(sensor.current, 1)), unit)
 
