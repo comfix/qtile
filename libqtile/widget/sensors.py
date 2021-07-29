@@ -81,9 +81,14 @@ class ThermalSensor(base.InLoopPollText):
         temperature_list = {}
         temps = psutil.sensors_temperatures(fahrenheit=not self.metric)
         unit = '°C' if self.metric else '°F'
+        empty_index = 0
         for kernel_module in temps:
             for sensor in temps[kernel_module]:
-                temperature_list[sensor.label] = (str(round(sensor.current, 1)), unit)
+                label = sensor.label
+                if not label:
+                    label = 'UNKNOWN-' + str(empty_index)
+                    empty_index += 1
+                temperature_list[label] = (str(round(sensor.current, 1)), unit)
 
         return temperature_list
 
